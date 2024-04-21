@@ -1,7 +1,8 @@
 package dev.noroom113.authservice.dto
 
-data class RegisterDto(
-    private val id: String,
-    private val username: String,
-    private val email: String,
+data class RegisterRequestDto(
+    val id: Long,
+    val identityId: String,
+    val username: String,
+    val email: String,
 )

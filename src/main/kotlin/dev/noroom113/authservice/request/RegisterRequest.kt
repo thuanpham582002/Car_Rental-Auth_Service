@@ -1,7 +1,8 @@
 package dev.noroom113.authservice.request
 
-class RegisterRequest(
-    private val username: String,
-    private val password: String,
-    private val email: String,
+data class RegisterRequest(
+    val identityId: String,
+    val username: String,
+    val email: String,
+    val password: String,
 )

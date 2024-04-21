@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody
 @FeignClient(name = "user-service", path = "/v1/user")
 interface UserServiceClient {
     @PostMapping("/save")
-    fun save(@RequestBody request: RegisterRequest?): ResponseEntity<RegisterDto?>?
+    fun save(@RequestBody request: RegisterRequest): ResponseEntity<RegisterDto?>
 
     @GetMapping("/getUserByUsername/{username}")
-    fun getUserByUsername(@PathVariable username: String?): ResponseEntity<UserDto?>?
+    fun getUserByUsername(@PathVariable username: String): ResponseEntity<UserDto?>
 }

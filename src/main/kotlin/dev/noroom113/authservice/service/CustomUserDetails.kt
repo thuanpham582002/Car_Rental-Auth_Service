@@ -11,30 +11,32 @@ class CustomUserDetails(
     private val user: UserDto
 ) : UserDetails {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        `
+        return Stream.of(user.accessibility)
+            .map { role -> SimpleGrantedAuthority(role.name) }
+            .collect(Collectors.toList())
     }
 
     override fun getPassword(): String {
-        TODO("Not yet implemented")
+        return user.password
     }
 
     override fun getUsername(): String {
-        TODO("Not yet implemented")
+        return user.username
     }
 
     override fun isAccountNonExpired(): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
 
     override fun isAccountNonLocked(): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
 
     override fun isCredentialsNonExpired(): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
 
     override fun isEnabled(): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
 }

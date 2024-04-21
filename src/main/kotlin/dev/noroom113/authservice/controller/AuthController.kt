@@ -13,16 +13,17 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/v1/auth")
-class AuthController {
-    private val authService: AuthService? = null
+class AuthController(
+    private val authService: AuthService
+) {
 
     @PostMapping("/login")
-    fun login(@RequestBody request: LoginRequest?): ResponseEntity<TokenDto> {
-        return ResponseEntity.ok(authService?.login(request))
+    fun login(@RequestBody request: LoginRequest): ResponseEntity<TokenDto> {
+        return ResponseEntity.ok(authService.login(request))
     }
 
     @PostMapping("/register")
-    fun register(@RequestBody request: RegisterRequest?): ResponseEntity<RegisterDto> {
-        return ResponseEntity.ok(authService?.register(request))
+    fun register(@RequestBody request: RegisterRequest): ResponseEntity<RegisterDto> {
+        return ResponseEntity.ok(authService.register(request))
     }
 }

@@ -17,23 +17,18 @@ class AuthService(
     private val userServiceClient: UserServiceClient,
     private val jwtService: JwtService,
 ) {
-
-
     fun login(request: LoginRequest): TokenDto {
         val authenticate: Authentication = authenticationManager.authenticate(
             UsernamePasswordAuthenticationToken(
-                request.getUsername(),
-                request.getPassword()
+                request.username,
+                request.password
             )
         )
-        if (authenticate.isAuthenticated) return TokenDto
-            .builder()
-            .token(jwtService!!.generateToken(request.getUsername()))
-            .build()
+        if (authenticate.isAuthenticated) return TokenDto(jwtService.generateToken(request.username))
         else throw WrongCredentialsException("Wrong credentials")
     }
 
-    fun register(request: RegisterRequest?): RegisterDto {
-        return userServiceClient.save(request).getBody()
+    fun register(request: RegisterRequest): RegisterDto? {
+        return userServiceClient.save(request).body
     }
 }

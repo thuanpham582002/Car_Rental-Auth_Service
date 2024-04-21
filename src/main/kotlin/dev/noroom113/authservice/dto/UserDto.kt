@@ -1,10 +1,10 @@
 package dev.noroom113.authservice.dto
 
-import dev.noroom113.authservice.enums.Role
+import dev.noroom113.authservice.enums.Accessibility
 
 data class UserDto(
-    private val id: String,
-    private val username: String,
-    private val password: String,
-    private val role: Role,
+    val id: String,
+    val username: String,
+    val password: String,
+    val accessibility: Accessibility,
 )

@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer
+import org.springframework.security.config.web.server.ServerHttpSecurity.http
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
@@ -21,10 +22,13 @@ class AuthConfig {
     @Bean
     @Throws(Exception::class)
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
-        return http.csrf().disable()
-            .authorizeRequests()
-            .antMatchers("/v1/auth/**").permitAll()
-            .and()
+        http {
+            authorizeRequests {
+                authorize("/v1/auth/**", permitAll)
+                authorize(anyRequest, authenticated)
+            }
+        }
+        return htt
             .build()
     }
 
