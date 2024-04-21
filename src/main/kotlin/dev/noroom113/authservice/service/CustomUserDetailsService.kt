@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service
 class CustomUserDetailsService(
     private val userServiceClient: UserServiceClient
 ) : UserDetailsService {
-
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(username: String): UserDetails {
         val user: UserDto = checkNotNull(userServiceClient.getUserByUsername(username).body)
