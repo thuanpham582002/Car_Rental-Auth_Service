@@ -1,10 +1,12 @@
 package dev.noroom113.authservice.dto
 
-import dev.noroom113.authservice.enums.Accessibility
+import java.io.Serializable
 
 data class UserDto(
-    val id: String,
-    val username: String,
-    val password: String,
-    val accessibility: Accessibility,
-)
+    val id: Long,
+    val name: String,
+    val email: String,
+    val accessibilityIds: List<Long>,
+    val indentityCard: IndentityCardDto,
+    val driverLicense: DriverLicenseDto? = null,
+) : Serializable

@@ -1,7 +1,7 @@
 package dev.noroom113.authservice.controller
 
-import dev.noroom113.authservice.dto.RegisterDto
 import dev.noroom113.authservice.dto.TokenDto
+import dev.noroom113.authservice.dto.UserDto
 import dev.noroom113.authservice.request.LoginRequest
 import dev.noroom113.authservice.request.RegisterRequest
 import dev.noroom113.authservice.service.AuthService
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/v1/auth")
+@RequestMapping("/api/v1/auth")
 class AuthController(
     private val authService: AuthService
 ) {
@@ -23,7 +23,7 @@ class AuthController(
     }
 
     @PostMapping("/register")
-    fun register(@RequestBody request: RegisterRequest): ResponseEntity<RegisterDto> {
+    fun register(@RequestBody request: RegisterRequest): ResponseEntity<UserDto> {
         return ResponseEntity.ok(authService.register(request))
     }
 }

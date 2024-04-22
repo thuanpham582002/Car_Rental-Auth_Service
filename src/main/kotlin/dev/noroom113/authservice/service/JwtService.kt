@@ -1,32 +1,25 @@
 package dev.noroom113.authservice.service
 
+import dev.noroom113.authservice.dto.UserDto
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
-import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
 import java.security.Key
 import java.util.*
 
 @Component
-class JwtService(
-    private val customUserDetailsService: CustomUserDetailsService
-){
-    fun generateToken(username: String): String {
-        val userDetails: UserDetails = customUserDetailsService.loadUserByUsername(username)
-        val claims: Map<String, Any> = HashMap()
-        return createToken(claims, userDetails)
-    }
-
-    private fun createToken(claims: Map<String, Any>, userDetails: UserDetails): String {
+class JwtService {
+    fun generateToken(username: UserDto): String {
         return Jwts.builder()
-            .setClaims(claims)
-            .setSubject(userDetails.username)
-            .setIssuer(userDetails.authorities.iterator().next().authority)
+            .setClaims(mapOf("accessibilityIds" to username.accessibilityIds))
+            .setSubject(username.indentityCard.number)
             .setIssuedAt(Date(System.currentTimeMillis()))
             .setExpiration(Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1 hour
-            .signWith(signKey, SignatureAlgorithm.HS256).compact()
+            .signWith(signKey, SignatureAlgorithm.HS256).compact().apply {
+                println("Generated token: $this")
+            }
     }
 
     private val signKey: Key
