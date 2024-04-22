@@ -50,7 +50,7 @@ data class Accessibility(
 }
 
 data class UrlAccessable(
-    val method: HttpMethod,
+    val method: Set<HttpMethod>,
     val uri: String,
 ) : Serializable
 
