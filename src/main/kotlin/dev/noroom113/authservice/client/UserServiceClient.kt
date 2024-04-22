@@ -15,5 +15,4 @@ interface UserServiceClient {
 
     @PostMapping("/login")
     fun login(@RequestBody request: LoginRequest): ResponseEntity<UserDto>
-
 }
