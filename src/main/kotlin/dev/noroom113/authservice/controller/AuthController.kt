@@ -1,5 +1,6 @@
 package dev.noroom113.authservice.controller
 
+import dev.noroom113.authservice.dto.IndentityCardDto
 import dev.noroom113.authservice.dto.TokenDto
 import dev.noroom113.authservice.dto.UserDto
 import dev.noroom113.authservice.request.LoginRequest
@@ -20,6 +21,10 @@ class AuthController(
     @PostMapping("/login")
     fun login(@RequestBody request: LoginRequest): ResponseEntity<TokenDto> {
         return ResponseEntity.ok(authService.login(request))
+    }
+
+    fun updateToken(@RequestBody indentityCardName : String): ResponseEntity<TokenDto> {
+        return ResponseEntity.ok(authService.updateToken(indentityCardName))
     }
 
     @PostMapping("/register")

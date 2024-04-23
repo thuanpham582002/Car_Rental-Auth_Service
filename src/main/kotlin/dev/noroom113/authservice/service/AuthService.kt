@@ -20,4 +20,9 @@ class AuthService(
     fun register(request: RegisterRequest): UserDto? {
         return userServiceClient.save(request).body
     }
+
+    fun updateToken(indentityCardName: String): TokenDto? {
+        val userDto = userServiceClient.getUserByIndentityCardName(indentityCardName).body ?: throw Exception("User not found")
+        return TokenDto(jwtService.generateToken(userDto))
+    }
 }

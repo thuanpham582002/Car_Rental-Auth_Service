@@ -5,6 +5,8 @@ import dev.noroom113.authservice.request.LoginRequest
 import dev.noroom113.authservice.request.RegisterRequest
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 
@@ -15,4 +17,7 @@ interface UserServiceClient {
 
     @PostMapping("/login")
     fun login(@RequestBody request: LoginRequest): ResponseEntity<UserDto>
+
+    @GetMapping("/getUserByIndentityCardName/{indentityCardName}")
+    fun getUserByIndentityCardName(@PathVariable indentityCardName: String): ResponseEntity<UserDto>
 }
