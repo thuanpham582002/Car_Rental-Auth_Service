@@ -6,6 +6,7 @@ import dev.noroom113.authservice.dto.UserDto
 import dev.noroom113.authservice.request.LoginRequest
 import dev.noroom113.authservice.request.RegisterRequest
 import dev.noroom113.authservice.service.AuthService
+import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -19,8 +20,13 @@ class AuthController(
 ) {
 
     @PostMapping("/login")
-    fun login(@RequestBody request: LoginRequest): ResponseEntity<TokenDto> {
-        return ResponseEntity.ok(authService.login(request))
+    fun login(
+        @RequestBody request: LoginRequest,
+        httpServletResponse: HttpServletResponse,
+    ): ResponseEntity<UserDto> {
+        return ResponseEntity.ok(authService.login(request) {
+            httpServletResponse.setHeader("Authorization", "Bearer $it")
+        })
     }
 
     fun updateToken(@RequestBody indentityCardName : String): ResponseEntity<TokenDto> {

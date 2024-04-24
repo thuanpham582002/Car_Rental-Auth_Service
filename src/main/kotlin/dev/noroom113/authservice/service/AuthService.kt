@@ -5,6 +5,7 @@ import dev.noroom113.authservice.dto.TokenDto
 import dev.noroom113.authservice.dto.UserDto
 import dev.noroom113.authservice.request.LoginRequest
 import dev.noroom113.authservice.request.RegisterRequest
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User
 import org.springframework.stereotype.Service
 
 @Service
@@ -12,9 +13,10 @@ class AuthService(
     private val userServiceClient: UserServiceClient,
     private val jwtService: JwtService,
 ) {
-    fun login(request: LoginRequest): TokenDto {
+    fun login(request: LoginRequest, tokenReceive: (String) -> Unit): UserDto {
         val userDto = userServiceClient.login(request).body ?: throw Exception("Wrong credentials")
-        return TokenDto(jwtService.generateToken(userDto))
+        tokenReceive(jwtService.generateToken(userDto))
+        return userDto
     }
 
     fun register(request: RegisterRequest): UserDto? {
